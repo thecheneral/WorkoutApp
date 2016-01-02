@@ -1,0 +1,32 @@
+<%= form_for @workout do |f| %>
+    <div>
+      <%= f.label :workout_datetime %>
+      <%= f.datetime_field :workout_datetime %>
+    </div>
+    <div>
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+    </div>
+    <div>
+      <%= f.label :result %>
+      <%= f.text_field :result %>
+    </div>
+    <div>
+      <%= f.label :lift_type %>
+      <%= f.text_field :lift_type %>
+    </div>
+    <div>
+      <%= f.label :lift_weight %>
+      <%= f.number_field :lift_weight %>
+    </div>
+    <div>
+      <%= f.label :lift_rep_scheme %>
+      <%= f.text_field :lift_rep_scheme %>
+    </div>
+    <div>
+      <%= label_tag :gym %>
+      <%= f.text_field :gym %>
+    </div>
+
+    <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
+<% end %>

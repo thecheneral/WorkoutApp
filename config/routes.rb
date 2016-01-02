@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
   
   root "welcome#index"
-  resources :workouts, :only => [:new, :show, :edit, :update, :destroy]
+  resources :workouts
   resources :gyms, :only => [:new, :show, :update]
 
 

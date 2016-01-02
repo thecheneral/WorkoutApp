@@ -5,7 +5,7 @@ class WorkoutsController < ApplicationController
 		@search = params[:search]
 
 	    if @search
-	    	@workout = Workout.search(@search)
+	    	@workouts = Workout.search(@search)
 
 	    elsif params[:id] == "all"
 	    	@workouts = Workout.all
@@ -15,20 +15,19 @@ class WorkoutsController < ApplicationController
 		
 	end
 
-	def show
-		@workout = Workout.find(params[:id])
-	end
-
 	def new
 		@workout = Workout.new
 	end
 	
 	def create
-		@workout = Workout.new(workout_params)
+		@workout = current_user.classifieds.build workout_params
+		@workout.gym = Gym.find_or_create_by(name:params[:gym])
+
 		if @workout.save
+			flash[:notice] = "Classified created."
 			redirect_to workout_path(@workout)
 		else
-      		flash.now[:error] = @workout.errors.messages.first.join(" ")
+      		flash.now[:alert] = @classified.errors.first
       		render 'new'
       	end
 	end
@@ -37,6 +36,10 @@ class WorkoutsController < ApplicationController
 		@workout = Workout.find(params[:id])
 	end
 
+	def show
+		@workout = Workout.find(params[:id])
+	end
+	
 	def update
 		@workout = Workout.find(params[:id])
 		if @workout.update(workout_params)

@@ -1,14 +1,13 @@
 
 
-<%= render 'search' %>
+<%= render 'search' %> | <%= link_to "View All Workouts", workouts_path(id: "all") %>
 <br>
 
-<p><%= link_to "Add a new story", new_story_path %> | <%= link_to "Show All", stories_path(showall: "all"), method: 'get' %> </p>
-
 <ul>
-<% @stories.each do |story| %>
-	<li>
-		<%= link_to story.title, story %>
-	</li>
-	<% end %>
+
+<% @workouts.each do |workout| %>
+	<li> <%= link_to workout.workout_datetime.to_date.to_formatted_s(:long_ordinal), workout %> 
+		| <%= workout.lift_type %> | <%= workout.result %> </li>
+<% end %>
+
 </ul>

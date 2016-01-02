@@ -1,0 +1,9 @@
+<h1><%= @Gym.name %></h1>
+<h2>Workouts under this gym</h2>
+
+<ul>
+  <% @gym.workouts.each do |workout| %>
+    	<li> <%= link_to workout.workout_datetime.to_date.to_formatted_s(:long_ordinal), workout %> 
+		| <%= truncate(workout.description) %> </li>
+  <% end %>
+</ul>
