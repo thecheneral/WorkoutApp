@@ -1,0 +1,14 @@
+
+
+<%= render 'search' %>
+<br>
+
+<p><%= link_to "Add a new story", new_story_path %> | <%= link_to "Show All", stories_path(showall: "all"), method: 'get' %> </p>
+
+<ul>
+<% @stories.each do |story| %>
+	<li>
+		<%= link_to story.title, story %>
+	</li>
+	<% end %>
+</ul>

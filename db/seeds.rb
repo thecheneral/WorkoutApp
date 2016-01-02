@@ -9,7 +9,11 @@ Workout.delete_all
 Gym.delete_all
 
 user1 = User.all.first
-gym1 = Gym.create (:name => "Old City Crossfit", :workout_url => "", :default => true)
+
+gym1 = Gym.create(
+	:name => "Old City Crossfit",
+	:workout_url => "http://www.oldcitycrossfit.com/wod/",
+	:default => true)
 
 
 Workout.create( 
@@ -26,8 +30,8 @@ Workout.create(
 	:result => "2 10 Minute EMOMs",
 	:lift_type => "Strict Press",
 	:lift_weight => 81,
-	:lift_rep_scheme => "10 Min EMOM: Odds 6 Strict Press @ 60%"
-	:user_id => user1
+	:lift_rep_scheme => "10 Min EMOM: Odds 6 Strict Press @ 60%",
+	:user_id => user1,
 	:gym_id => gym1
 )
 
