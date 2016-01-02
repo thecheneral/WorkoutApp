@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
+  
+  root "welcome#index"
+  resources :workouts, :only => [:new, :show, :edit, :update, :destroy]
+  resources :gyms, :only => [:new, :show, :update]
 
-  root "workout#index"
-  resources :workout
+
+  get 'welcome/', to: 'welcome#index' #http method to get
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

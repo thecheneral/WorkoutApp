@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151229172937) do
+ActiveRecord::Schema.define(version: 20160102154259) do
+
+  create_table "gyms", force: :cascade do |t|
+    t.string   "name"
+    t.string   "workout_url"
+    t.boolean  "default"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -26,14 +34,24 @@ ActiveRecord::Schema.define(version: 20151229172937) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "workouts", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "workout_datetime"
+    t.text     "description"
+    t.text     "result"
+    t.string   "lift_type"
+    t.integer  "lift_weight"
+    t.string   "lift_rep_scheme"
+    t.integer  "user_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "gym_id"
   end
 
 end

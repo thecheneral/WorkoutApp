@@ -1,0 +1,8 @@
+<h1> Welcome to WOD Tracker</h1>
+
+<% if user_signed_in? %>
+  <div>Signed in as <%= current_user.first_name %> (<%= current_user.email %>)</div>
+<% end %>
+
+<%= link_to "Log Workout",new_workout_path %>
+<%= link_to "View All Workouts", workout_path(id: "all") %>

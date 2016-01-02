@@ -1,0 +1,14 @@
+<h1>Hi</h1>
+
+<h1>List of all Workouts</h1>
+
+<% @workouts.each do |workout| %>
+	<p> Date: <%= workout.workout_datetime.to_date.to_formatted_s(:long_ordinal) %> </p>
+	<ul>
+		<li> Workout: <%= workout.description %> </li>
+		<li> Result: <%= workout.result %> </li>
+		<li> Lift Type: <%= workout.lift_type %> </li>
+		<li> Lift Weight: <%= workout.lift_weight %> </li>
+		<li> Lift Rep Scheme: <%= workout.lift_rep_scheme %> </li>
+	</ul>
+<% end %>
