@@ -3,6 +3,14 @@
       <%= f.label :workout_datetime %>
       <%= f.datetime_field :workout_datetime %>
     </div>
+    <div class="form-group">
+        <div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
     <div>
       <%= f.label :description %>
       <%= f.text_area :description %>
@@ -29,4 +37,11 @@
     </div>
 
     <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
+
+
 <% end %>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
