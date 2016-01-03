@@ -1,0 +1,17 @@
+<%= form_for @workout do |f| %>
+    <div>
+      <%= f.label :workout_datetime %>
+      <%= f.date_select :workout_datetime %>
+    </div>
+    <div>
+      <%= label_tag :gym %>
+      <select name="workout[gym_id]">
+          <% Gym.all.each do |gym| %>
+              <option value="<%= gym.id %>"><%= gym.name_and_url %></option>
+          <% end %>
+      </select>
+    </div>
+
+    <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
+<% end %>
+

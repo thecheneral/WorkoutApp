@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root "welcome#index"
   resources :workouts
-  resources :gyms, :only => [:new, :show, :update]
+  resources :gyms
 
 
   get 'welcome/', to: 'welcome#index' #http method to get

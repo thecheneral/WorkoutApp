@@ -20,14 +20,14 @@ class WorkoutsController < ApplicationController
 	end
 	
 	def create
-		@workout = current_user.classifieds.build workout_params
-		@workout.gym = Gym.find_or_create_by(name:params[:gym])
+		@workout = current_user.workouts.build workout_params
+		# @workout.gym = Gym.find_or_create_by(name:params[:gym])
 
 		if @workout.save
-			flash[:notice] = "Classified created."
-			redirect_to workout_path(@workout)
+			flash[:notice] = "Workout created."
+			redirect_to edit_workout_path(@workout)
 		else
-      		flash.now[:alert] = @classified.errors.first
+      		flash.now[:alert] = @workout.errors.first
       		render 'new'
       	end
 	end
@@ -59,6 +59,6 @@ class WorkoutsController < ApplicationController
 	private
 
 	def workout_params
-		params.require(:workout).permit(:workout_datetime,:description,:result,:lift_type,:lift_weight,:lift_rep_scheme)
+		params.require(:workout).permit(:workout_datetime, :gym_id)
 	end
 end

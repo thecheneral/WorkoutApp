@@ -1,19 +1,15 @@
 <%= form_for @workout do |f| %>
     <div>
       <%= f.label :workout_datetime %>
-      <%= f.datetime_field :workout_datetime %>
+      <%= @workout.workout_datetime %>
     </div>
-    <div class="form-group">
-        <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
+    <div>
+      <%= label_tag :gym %>
+      <%= @workout.gym.name %>
     </div>
     <div>
       <%= f.label :description %>
-      <%= f.text_area :description %>
+      <%= @workout.description %>
     </div>
     <div>
       <%= f.label :result %>
@@ -31,17 +27,9 @@
       <%= f.label :lift_rep_scheme %>
       <%= f.text_field :lift_rep_scheme %>
     </div>
-    <div>
-      <%= label_tag :gym %>
-      <%= f.text_field :gym %>
-    </div>
+
 
     <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
 
 
 <% end %>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
-</script>

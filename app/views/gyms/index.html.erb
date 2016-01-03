@@ -1,0 +1,7 @@
+<h1>Gyms</h1>
+
+<ul>
+<% @gyms.each do |gym| %>
+	<li> <%= gym.name %> | <%= link_to gym.workout_url, gym.workout_url %> | <%= gym.default %> </li>
+<% end %>
+</ul>

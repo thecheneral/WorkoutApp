@@ -15,6 +15,10 @@ gym1 = Gym.create(
 	:workout_url => "http://www.oldcitycrossfit.com/wod/",
 	:default => true)
 
+Gym.create(
+	:name => "Sample Crossfit",
+	:workout_url => "http://www.sample.com/wod/",
+	:default => false)
 
 Workout.create( 
 	:workout_datetime => DateTime.new(2016,1,1,12),
@@ -30,8 +34,8 @@ Workout.create(
 	:lift_type => "Strict Press",
 	:lift_weight => 81,
 	:lift_rep_scheme => "10 Min EMOM: Odds 6 Strict Press @ 60%",
-	:user_id => user1,
-	:gym_id => gym1
+	:user => user1,
+	:gym => gym1
 )
 
 Workout.create( 
@@ -45,8 +49,8 @@ Workout.create(
 	:lift_type => "Back Squat",
 	:lift_weight => 215,
 	:lift_rep_scheme => "10 Min EMOM 2 reps @ 75%",
-	:user_id => user1,
-	:gym_id => gym1
+	:user => user1,
+	:gym => gym1
 )
 
 Workout.create( 
@@ -61,8 +65,8 @@ WOD\n
 	:lift_type => "Deadlift",
 	:lift_weight => 275,
 	:lift_rep_scheme => "3 sets of 5-6 reps @75% + heavy KBS",
-	:user_id => user1,
-	:gym_id => gym1
+	:user => user1,
+	:gym => gym1
 )
 
 puts "Workouts added, gym added."
