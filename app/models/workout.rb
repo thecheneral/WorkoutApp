@@ -21,8 +21,10 @@ class Workout < ActiveRecord::Base
 		
 	# # end
 
-	def self.get_gym_feed (url,workout_date)
-		@date = "#{workout_date.month}#{workout_date.day}#{workout_date.year.to_s.split(//).last(2).join}"
+	def get_gym_feed (url,selected_date)
+		@url = url
+		@date = selected_date
+		@date = "#{@date.month}#{@date.day}#{@date.year.to_s.split(//).last(2).join}"
 		@wod_from_site = Nokogiri::HTML(open("#{@url}#{@date}/"))
 		#would need to pass the date for the specific feed and would need to pass the specific date
 		@workout = @wod_from_site.css('div.entry-content')[0].css('p').map{|p| p.children.first.text}
