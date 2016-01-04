@@ -24,7 +24,7 @@ class WorkoutsController < ApplicationController
 		# @workout.gym = Gym.find_or_create_by(name:params[:gym])
 
 		if @workout.save
-			flash[:notice] = "Workout created."
+			flash[:notice] = "Workout fetched for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
 			redirect_to edit_workout_path(@workout)
 		else
       		flash.now[:alert] = @workout.errors.first
@@ -33,7 +33,26 @@ class WorkoutsController < ApplicationController
 	end
 
 	def edit
+		# @workout = Workout.find(params[:id])
+		# @workout_scrape = WorkoutScraper.new(@workout.gym.workout_url,@workout.workout_datetime)
+		# @workout_scrape = @workout_scrape.get_gym_feed
+		# @workout.description = @workout_scrape.get_class_items
+		require 'nokogiri'
+		require 'open-uri'
+
 		@workout = Workout.find(params[:id])
+		@url = @workout.gym.workout_url
+		@date = "#{@workout.workout_datetime.month}#{@workout.workout_datetime.day}#{@workout.workout_datetime.year.to_s.split(//).last(2).join}"
+		
+		@wod_from_site = Nokogiri::HTML(open("#{@url}#{@date}/"))
+		#would need to pass the date for the specific feed and would need to pass the specific date
+		@scrape = @wod_from_site.css('div.entry-content')[0].css('p').map{|p| p.children.first.text}
+		@scrape.drop(1)
+
+		# @scrape.each do |line|
+		# 	 = line
+		# end
+		@workout.description = @scrape.join("/n")
 	end
 
 	def show

@@ -31,6 +31,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise', '~> 3.5.0'
 gem 'bootstrap-sass' 
+gem 'nokogiri'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
