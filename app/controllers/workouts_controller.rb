@@ -65,7 +65,7 @@ class WorkoutsController < ApplicationController
 	
 	def update
 		@workout = Workout.find(params[:id])
-		if @workout.update(workout_params)
+		if @workout.update(update_params)
 			redirect_to workout_path(@workout)
 		else
       		flash.now[:error] = @workout.errors.messages.first.join(" ")
@@ -83,5 +83,9 @@ class WorkoutsController < ApplicationController
 
 	def workout_params
 		params.require(:workout).permit(:workout_datetime, :gym_id)
+	end
+
+	def update_params
+		params.require(:workout).permit(:description, :result, :lift_type, :lift_weight, :lift_rep_scheme)
 	end
 end
