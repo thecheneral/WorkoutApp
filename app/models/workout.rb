@@ -28,11 +28,10 @@ class Workout < ActiveRecord::Base
 		@wod_from_site = Nokogiri::HTML(open("#{@url}#{@date}/"))
 		#would need to pass the date for the specific feed and would need to pass the specific date
 		@workout = @wod_from_site.css('div.entry-content')[0].css('p').map{|p| p.children.first.text}
-		@workout.drop(1)
-
-		@workout.each do |line|
-			puts "#{line}"
-		end
+		# @workout.drop(1)
+		# @workout.drop(2)
+		@workout.reject! &:blank?
+		@workout.join("\n")
 	end
 end
 

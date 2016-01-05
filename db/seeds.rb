@@ -5,12 +5,15 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+User.delete_all
 Workout.delete_all
 Gym.delete_all
 
-user1 = User.all.first
 
-gym1 = Gym.create(
+user = User.find_or_initialize_by(:email => "test1@test.com",:first_name =>"test",:last_name=>"test")
+user.update_attributes(:password=>"password") if user.new_record?
+
+gym1 = user.gyms.find_or_create_by(
 	:name => "Old City Crossfit",
 	:workout_url => "http://www.oldcitycrossfit.com/wod/",
 	:default => true)

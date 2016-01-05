@@ -1,15 +1,11 @@
 <%= form_for @workout do |f| %>
     <div>
       <%= f.label :workout_datetime %>
-      <%= f.datetime_select :workout_datetime, {order: [:month, :day, :year]}, {required: true} %>
+      <%= f.datetime_select :workout_datetime, {order: [:month, :day, :year], ampm: true, default: DateTime.now - 1.hour}, {required: true} %>
     </div>
     <div>
-      <%= label_tag :gym %>
-      <select name="workout[gym_id]">
-          <% Gym.all.each do |gym| %>
-              <option value="<%= gym.id %>"><%= gym.name_and_url %></option>
-          <% end %>
-      </select>
+      <%= f.label :gym %>
+      <%= collection_select(:workout, :gym_id, current_user.gyms, :id, :name, selected: current_user.gyms.default.try(:id)) %>
     </div>
 
     <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
