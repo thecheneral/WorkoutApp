@@ -5,18 +5,18 @@ class WorkoutsController < ApplicationController
 		@search = params[:search]
 
 	    if @search
-	    	@workouts = Workout.search(@search)
+	    	@workouts = current_user.workouts.search(@search)
 
 	    elsif params[:id] == "all"
-	    	@workouts = Workout.all
+	    	@workouts = current_user.workouts.all
 	    else
-	    	@workouts = Workout.find(params[:id])
+	    	@workouts = current_user.workouts.find(params[:id])
 	    end
 		
 	end
 
 	def new
-		@workout = Workout.new
+		@workout = current_user.workouts.new
 	end
 	
 	def create
@@ -74,9 +74,9 @@ class WorkoutsController < ApplicationController
 	end
 
 	def destroy
-		@workout = workout.find(params[:id])
-    	@workout.destroy
-    	redirect_to workouts_path
+		@workout = Workout.find(params[:id])
+    @workout.destroy
+    redirect_to workouts_path(id: "all")
 	end
 
 	private

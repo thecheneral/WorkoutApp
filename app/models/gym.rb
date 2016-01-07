@@ -1,9 +1,10 @@
 class Gym < ActiveRecord::Base
 	has_many :workouts 
-	belongs_to :user
+	has_many :memberships
+	has_many :users, :through => :memberships
 
-validates :default, uniqueness:{ scope: :user,
-			message: "Only one default gym per user."}
+# validates :default, uniqueness:{ scope: :user,
+# 			message: "Only one default gym per user."}
 
 	def name_and_url
 		"#{name} (#{workout_url})"

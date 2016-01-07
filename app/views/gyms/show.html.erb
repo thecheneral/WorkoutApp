@@ -1,9 +1,13 @@
-<h1><%= @Gym.name %></h1>
-<h2>Workouts under this gym</h2>
+<h1><%= @gym.name %></h1>
+<h2>Recorded Workouts under this gym for <%= current_user.first_name %>: </h2>
 
 <ul>
-  <% @gym.workouts.each do |workout| %>
+  <% @workouts.each do |workout| %>
     	<li> <%= link_to workout.workout_datetime.to_date.to_formatted_s(:long_ordinal), workout %> 
 		| <%= truncate(workout.description) %> </li>
   <% end %>
 </ul>
+
+<br>
+<%= link_to "View All Workouts", workouts_path(id: "all") %>
+<%=link_to "View Gyms", gyms_path %>

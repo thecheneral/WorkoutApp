@@ -7,7 +7,9 @@
 <p> Lift Type: <%= @workout.lift_type %> </p>
 <p> Lift Weight: <%= @workout.lift_weight %> </p>
 <p> Lift Rep Scheme: <%= @workout.lift_rep_scheme %> </p>
+<%= link_to "Delete Workout", workout_path(@workout), method: 'delete' %>
 
+<br>
 <%= link_to "Log New Workout",new_workout_path %> | 
 <%= link_to "Edit Workout",edit_workout_path(@workout) %> | 
 <%= link_to "View All Workouts", workouts_path(id: "all") %>

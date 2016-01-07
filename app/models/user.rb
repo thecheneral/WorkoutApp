@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :workouts
-  has_many :gyms
+  has_many :memberships
+  has_many :gyms, :through => :memberships
+
 
 end

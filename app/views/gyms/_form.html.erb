@@ -1,0 +1,17 @@
+<%= form_for @gym do |f| %>
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.label :workout_url %>
+      <%= f.text_field :workout_url %>
+    </div>
+    <div>
+      <%= f.label :default %>
+      <%= f.check_box :default %>
+    </div>
+
+    <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
+    <%= link_to 'Cancel', gyms_path, class: 'btn btn-primary btn-lg' %>
+<% end %>

@@ -2,6 +2,10 @@
 
 <ul>
 <% @gyms.each do |gym| %>
-	<li> <%= gym.name %> | <%= link_to gym.workout_url, gym.workout_url %> | <%= gym.default %> </li>
+	<li> <%= link_to gym.name, gym_path(gym) %> | <%= link_to gym.workout_url, gym.workout_url %> | <%= gym.default %> </li>
 <% end %>
 </ul>
+
+<%= link_to "Log Workout",new_workout_path %>
+<%= link_to "View All Workouts", workouts_path(id: "all") %>
+<%= link_to "Add New Gym", new_gym_path %>

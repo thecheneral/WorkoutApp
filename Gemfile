@@ -31,7 +31,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise', '~> 3.5.0'
 gem 'bootstrap-sass' 
-gem 'nokogiri'
+# gem 'nokogiri'
+# gem 'omniauth-fitbit'
+gem 'sinatra'
+gem 'omniauth-fitbit-oauth2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
