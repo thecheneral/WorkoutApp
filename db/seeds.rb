@@ -5,25 +5,42 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+#Delete current data from tables
 User.delete_all
 Workout.delete_all
 Gym.delete_all
+Membership.delete_all
 
+#Create users
+user1 = User.find_or_initialize_by(:email => "test@test.com",:first_name =>"test",:last_name=>"test")
+user1.update_attributes(:password=>"password") if user1.new_record?
 
-user = User.find_or_initialize_by(:email => "test1@test.com",:first_name =>"test",:last_name=>"test")
-user.update_attributes(:password=>"password") if user.new_record?
+user2 = User.find_or_initialize_by(:email => "sample@sample.com",:first_name =>"sample",:last_name=>"sample")
+user2.update_attributes(:password=>"password") if user2.new_record?
 
-gym1 = user.gyms.find_or_create_by(
+#Create gyms
+gym1 = Gym.find_or_create_by(
 	:name => "Old City Crossfit",
-	:workout_url => "http://www.oldcitycrossfit.com/wod/",
-	:default => true)
+	:workout_url => "http://www.oldcitycrossfit.com/wod/")
 
-Gym.create(
-	:name => "Sample Crossfit",
-	:workout_url => "http://www.sample.com/wod/",
+gym2 = Gym.find_or_create_by(
+	:name => "Sample",
+	:workout_url => "http://www.sample.com/",
 	:default => false)
+# Gym.create(
+# 	:name => "Sample Crossfit",
+# 	:workout_url => "http://www.sample.com/wod/",
+# 	:default => false)
 
-Workout.create( 
+#Seed join table
+Membership.create(user: user1, gym: gym1, default: true)
+Membership.create(user: user1, gym: gym2, default: false)
+Membership.create(user: user2, gym: gym1, default: false)
+Membership.create(user: user2, gym: gym2, default: true)
+
+#Create workouts for User1 and User2
+user1.workouts.create( 
 	:workout_datetime => DateTime.new(2016,1,1,12),
 	:description => "10 Min EMOM: (Odd mins) 6 Strict Press @ 60%, (even mins) 6 Strict pullups \n
 	10 Min EMOM:\n
@@ -37,11 +54,10 @@ Workout.create(
 	:lift_type => "Strict Press",
 	:lift_weight => 81,
 	:lift_rep_scheme => "10 Min EMOM: Odds 6 Strict Press @ 60%",
-	:user => user1,
 	:gym => gym1
 )
 
-Workout.create( 
+user1.workouts.create( 
 	:workout_datetime => DateTime.new(2015,12,5,06),
 	:description => "Back Squat – 10 min EMOM – 2 reps at 75%\n
 4 rounds:\n
@@ -52,11 +68,10 @@ Workout.create(
 	:lift_type => "Back Squat",
 	:lift_weight => 215,
 	:lift_rep_scheme => "10 Min EMOM 2 reps @ 75%",
-	:user => user1,
 	:gym => gym1
 )
 
-Workout.create( 
+user1.workouts.create( 
 	:workout_datetime => DateTime.new(2015,12,3,06),
 	:description => "Deadlift\n
 3 sets of 5-6 reps @75% + heavy KBS\n
@@ -68,8 +83,24 @@ WOD\n
 	:lift_type => "Deadlift",
 	:lift_weight => 275,
 	:lift_rep_scheme => "3 sets of 5-6 reps @75% + heavy KBS",
-	:user => user1,
 	:gym => gym1
 )
 
-puts "Workouts added, gym added."
+
+user2.workouts.create( 
+	:workout_datetime => DateTime.new(2015,12,3,06),
+	:description => "Deadlift\n
+					3 sets of 5-6 reps @75% + heavy KBS\n
+					WOD\n
+					50 KB Swings(53/35)\n
+					800m Run\n
+					50 KB Swings\n",
+	:result => "15:38",
+	:lift_type => "Deadlift",
+	:lift_weight => 275,
+	:lift_rep_scheme => "3 sets of 5-6 reps @75% + heavy KBS",
+	:gym => gym2
+)
+
+puts "User1 create password is password, 3 Workouts added, gyms added."
+puts "User2 created password is password, 1 workout added, gym added for user2."
