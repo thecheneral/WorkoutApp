@@ -17,7 +17,7 @@ class GymsController < ApplicationController
       redirect_to gym_path(@gym)
     else
       flash.now[:alert] = @gym.errors.first
-          render 'new'
+      render 'new'
     end    
   end
 
@@ -35,7 +35,9 @@ class GymsController < ApplicationController
 	end
 
 	def destroy
-
+    @gym = Gym.find(params[:id])
+    @gym.destroy
+    redirect_to gyms_path
 	end
 
   private

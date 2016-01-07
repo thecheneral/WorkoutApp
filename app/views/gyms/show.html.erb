@@ -9,5 +9,8 @@
 </ul>
 
 <br>
+<%= link_to "Delete Gym", gym_path(id: @gym), method: 'delete' %>
+
+<br>
 <%= link_to "View All Workouts", workouts_path(id: "all") %>
 <%=link_to "View Gyms", gyms_path %>
