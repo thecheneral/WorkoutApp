@@ -1,5 +1,8 @@
 class OmniauthController < ApplicationController
   def create
+    pp request.env['omniauth.auth']
+    pp auth_hash
+    
     auth_hash = request.env['omniauth.auth']
     
     #session[:user_id]
@@ -10,6 +13,9 @@ class OmniauthController < ApplicationController
     if current_user
       current_user.update_attributes access_token: auth_hash["credentials"].secret,
                                      refresh_token: auth_hash["credentials"].token
+      flash[:notice] = "Fitbit connected!"
     end
+
+    redirect_to 
   end
 end
