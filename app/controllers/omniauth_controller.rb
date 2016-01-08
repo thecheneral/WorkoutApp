@@ -1,9 +1,10 @@
 class OmniauthController < ApplicationController
   def create
-    puts request.env['omniauth.auth'].inspect
+    
+    puts request.env['omniauth2.auth'].inspect
     puts auth_hash.inspect
 
-    auth_hash = request.env['omniauth.auth']
+    auth_hash = request.env['omniauth2.auth']
     
     #session[:user_id]
     # Means our user is signed in. Add the authorization to the user
