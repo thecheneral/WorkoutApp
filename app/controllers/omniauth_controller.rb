@@ -16,6 +16,6 @@ class OmniauthController < ApplicationController
     #   flash[:notice] = "Fitbit connected!"
     # end
 
-    redirect_to root
+    redirect_to root_path
   end
 end
