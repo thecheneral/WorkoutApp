@@ -1,8 +1,8 @@
 class OmniauthController < ApplicationController
   def create
-    pp request.env['omniauth.auth']
-    pp auth_hash
-    
+    puts request.env['omniauth.auth'].inspect
+    puts auth_hash.inspect
+
     auth_hash = request.env['omniauth.auth']
     
     #session[:user_id]
