@@ -37,6 +37,7 @@ class WorkoutsController < ApplicationController
 		if @workout.description.nil? || @workout.description.empty?
 			@workout_scrape = @workout.get_gym_feed(@workout.gym.workout_url,@workout.workout_datetime)
 			@workout.description = @workout_scrape
+			@fitbit = @workout.get_fitbit_data(@workout.workout_datetime,current_user)
 			flash[:notice] = "Description added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
 		else
 			flash[:notice] = "Awaiting updates..."

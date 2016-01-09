@@ -25,7 +25,7 @@ class Workout < ActiveRecord::Base
 		@url = url
 		@date = selected_date
 		@date = "#{@date.month}#{@date.day}#{@date.year.to_s.split(//).last(2).join}"
-		@wod_from_site = Nokogiri::HTML(open("#{@url}#{@date}/"))
+		@wod_from_site = Nokogiri::HTML(Net::HTTP.get(URI("#{@url}#{@date}/")))
 		#would need to pass the date for the specific feed and would need to pass the specific date
 		@workout = @wod_from_site.css('div.entry-content')[0].css('p').map{|p| p.children.first.text}
 		# @workout.drop(1)
@@ -33,7 +33,22 @@ class Workout < ActiveRecord::Base
 		@workout.reject! &:blank?
 		@workout.join("\n")
 	end
+
+	def get_fitbit_data (selected_date, user)
+		@date = selected_date
+		
+		client = Fitbit::Client.new(
+		  client_id: ENV['FITBIT_CLIENT_ID'],
+		  client_secret: ENV['FITBIT_CLIENT_SECRET'],
+		  access_token: user.access_token,
+		  refresh_token: user.refresh_token,
+		  expires_at: DateTime.now + 1.day #user.expires_at
+		  )
+		@fitbit_data = client.heart_rate_intraday_time_series(user_id: '-', date: @date.strftime('%Y-%m-%d'), start_time: @date.strftime('%H:%M'),end_time:(@date + 1.hour).strftime('%H:%M'), detail_level: '1min')
+	end
+
 end
+
 
 	# def get_wod_date
 	# 	#to get the title of the entry (assuming that the date is different than the title) still need to pass the different gym site

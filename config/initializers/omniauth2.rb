@@ -1,5 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :fitbit_oauth2, '229RGM', '9ff210689c9d4f784b8d8b2ec88b99b2',
+  provider :fitbit_oauth2, ENV['FITBIT_CLIENT_ID'], ENV['FITBIT_CLIENT_SECRET'],
     :scope => 'profile activity sleep heartrate', :expires_in => '2592000',
     :prompt => 'login'
 end
