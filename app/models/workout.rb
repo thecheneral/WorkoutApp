@@ -1,7 +1,3 @@
-# require 'nokogiri'
-# require 'open-uri'
-
-
 class Workout < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :gym
