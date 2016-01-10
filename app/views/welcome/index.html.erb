@@ -1,10 +1,20 @@
-<h1> Welcome to WOD Tracker</h1>
+<div class="row">
+  <div class="col-md-12">
 
-<% if user_signed_in? %>
-  <div>Signed in as <%= current_user.first_name %> (<%= current_user.email %>)</div>
-<% end %>
+    <div class="jumbotron">
+      <h1>Welcome to WOD Tracker</h1>
+      <p> This is a test application. </p>
+      <p><a class="btn btn-primary btn-lg" href='<%= new_user_registration_path %>' role="button">Sign Up</a></p>
 
-<%= link_to "Log Workout",new_workout_path %>
-<%= link_to "View All Workouts", workouts_path(id: "all") %>
-<%= link_to "View Gyms", gyms_path %>
-<%= link_to "Add New Gym", new_gym_path %>
+    </div>
+    <div>
+      <%= image_tag("homepage.jpg") %>
+    </div>
+
+
+    <% if user_signed_in? %>
+      <div>Signed in as <%= current_user.first_name %> (<%= current_user.email %>)</div>
+    <% end %>
+
+  </div>
+</div>
