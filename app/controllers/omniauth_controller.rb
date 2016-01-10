@@ -10,7 +10,8 @@ class OmniauthController < ApplicationController
 
     if current_user
       current_user.update_attributes access_token: auth_hash["credentials"].token,
-                                     refresh_token: auth_hash["credentials"].refresh_token
+                                     refresh_token: auth_hash["credentials"].refresh_token,
+                                     expires_at: auth_hash["credentials"].expires_at
       flash[:notice] = "Fitbit connected!"
     end
 

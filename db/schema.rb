@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106210946) do
+ActiveRecord::Schema.define(version: 20160110073525) do
 
   create_table "gyms", force: :cascade do |t|
     t.string   "name"
@@ -44,10 +44,9 @@ ActiveRecord::Schema.define(version: 20160106210946) do
     t.datetime "updated_at",                          null: false
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "consumer_key"
-    t.string   "consumer_secret"
     t.string   "access_token"
     t.string   "refresh_token"
+    t.integer  "expires_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -61,9 +60,11 @@ ActiveRecord::Schema.define(version: 20160106210946) do
     t.integer  "lift_weight"
     t.string   "lift_rep_scheme"
     t.integer  "user_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "gym_id"
+    t.text     "fitbit_heart_rate"
+    t.text     "fitbit_steps"
   end
 
 end

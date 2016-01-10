@@ -31,7 +31,8 @@ class Workout < ActiveRecord::Base
 		@workout.join("\n")
 	end
 
-	def get_fitbit_data (selected_date, user)
+	def get_fitbit_hr_data (selected_date, user)
+		byebug
 		@date = selected_date
 		
 		client = Fitbit::Client.new(
@@ -39,10 +40,17 @@ class Workout < ActiveRecord::Base
 		  client_secret: ENV['FITBIT_CLIENT_SECRET'],
 		  access_token: user.access_token,
 		  refresh_token: user.refresh_token,
-		  expires_at: DateTime.now + 1.day #user.expires_at
+		  expires_at: Time.at(user.expires_at)
 		  )
-		@fitbit_data = client.heart_rate_intraday_time_series(user_id: '-', date: @date.strftime('%Y-%m-%d'), start_time: @date.strftime('%H:%M'),end_time:(@date + 1.hour).strftime('%H:%M'), detail_level: '1min')
+		@fitbit_hr_data = client.heart_rate_intraday_time_series(user_id: '-', date: @date.strftime('%Y-%m-%d'), start_time: @date.strftime('%H:%M'),end_time:(@date + 1.hour).strftime('%H:%M'), detail_level: '1min')
+		@fitbit_hr_data = @fitbit_hr_data
+		
 	end
+
+	def parse_fitbit_hr
+		# @hr_minute_date.map{|hr| hr["value"]}
+	end
+
 
 end
 

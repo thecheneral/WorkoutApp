@@ -40,13 +40,19 @@ class WorkoutsController < ApplicationController
 		if @workout.description.nil? || @workout.description.empty?
 			@workout_scrape = @workout.get_gym_feed(@workout.gym.workout_url,@workout.workout_datetime)
 			@workout.description = @workout_scrape
-			@fitbit = @workout.get_fitbit_data(@workout.workout_datetime,current_user)
-			flash[:notice] = "Description added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
+
+			@fitbit_hr = @workout.get_fitbit_hr_data(@workout.workout_datetime,current_user)
+			@data = JSON.parse(@fitbit_hr)
+			@hr_minute_data = @data["activities-heart-intraday"]["dataset"]
+			@workout.update_attribute(:fitbit_heart_rate, @hr_minute_data)
+			flash[:notice] = "Description and FitBit Heart Rate Data added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
 		end
 	end
 
 	def show
 		@workout = Workout.find(params[:id])
+		@heart_rate = @workout.fitbit_heart_rate
+		@fitbit_time = @hr_minute_date.map{|time| time["time"]}
 	end
 	
 	def update
