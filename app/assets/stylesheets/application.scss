@@ -69,3 +69,16 @@
 .view_workouts td {
   border-top: solid 1px #A9A9A9 !important;
 }
+
+.new_workout_title {
+  text-align: right;
+  padding-top: 3px;
+  margin-bottom: 20px;
+}
+
+
+@media (max-width: 768px) {
+  .new_workout_title {
+    text-align: left;
+  }
+}

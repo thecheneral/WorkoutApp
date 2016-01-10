@@ -1,12 +1,30 @@
-<%= form_for @workout do |f| %>
-    <div>
-      <%= f.label :workout_datetime %>
-      <%= f.datetime_select :workout_datetime, {order: [:month, :day, :year], ampm: true, default: DateTime.now - 1.hour}, {required: true} %>
-    </div>
-    <div>
-      <%= f.label :gym %>
-      <%= collection_select(:workout, :gym_id, current_user.gyms, :id, :name, selected: current_user.gyms.default.try(:id)) %>
-    </div>
+<%= form_for @workout, :html => {:class => 'form-inline'} do |f| %>
+    <div class="row">
+        
+          <div class="col-sm-2 new_workout_title">
+            <%= f.label :workout_datetime, "Workout Date" %>
+          </div>
+          <div class="col-sm-10">
+            <%= f.datetime_select :workout_datetime, {order: [:month, :day, :year], ampm: true, default: DateTime.now, :minute_step => 15}, {required: true, :class => "form-control"} %>
+          </div>
+        
+      </div>
+    <div class="row">
+      
+         <div class="col-sm-2 new_workout_title">
+          <%= f.label :gym %>
+         </div>
+         <div class="col-sm-10"> 
+          <%= collection_select(:workout, :gym_id, current_user.gyms, :id, :name, {selected: current_user.gyms.default.try(:id)}, {:class => "form-control"}) %>
+          </div>
+        
+      </div>
+    <div class="row">
+  
+     <div class="col-sm-10 col-sm-offset-2">
+      <%= f.submit 'Submit', class: 'btn btn-primary btn-lg button_grey' %>
+     </div>
 
-    <%= f.submit 'Submit', class: 'btn btn-primary btn-lg' %>
+    
+    </div>
 <% end %>
