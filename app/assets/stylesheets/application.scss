@@ -35,3 +35,13 @@
   background-color: transparent !important;
   padding: 0 !important;
 }
+
+.navbar-default {
+ background-color: rgba(255, 255, 255, .8);
+ border: none;
+ margin-top: 10px;
+}
+
+.navbar-default a {
+  color: #000 !important;
+}
