@@ -42,7 +42,7 @@ class WorkoutsController < ApplicationController
 			@workout.description = @workout_scrape
 
 			@fitbit_hr = @workout.get_fitbit_hr_data(@workout.workout_datetime,current_user)
-			@data = JSON.parse(@fitbit_hr)
+			@data = (@fitbit_hr)
 			@hr_minute_data = @data["activities-heart-intraday"]["dataset"]
 			@workout.update_attribute(:fitbit_heart_rate, @hr_minute_data)
 			flash[:notice] = "Description and FitBit Heart Rate Data added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
@@ -51,8 +51,10 @@ class WorkoutsController < ApplicationController
 
 	def show
 		@workout = Workout.find(params[:id])
-		@heart_rate = @workout.fitbit_heart_rate
-		@fitbit_time = @hr_minute_date.map{|time| time["time"]}
+		# @data = eval(@workout.fitbit_heart_rate)
+		# @time = @data.map{|time| time["time"]}
+		# @heart_rate = @data.map{|value| value["value"]}
+		# @workout = {:workout => @workout, :time => @time, :heart_rate => @heart_rate}
 	end
 	
 	def update

@@ -42,8 +42,8 @@ class Workout < ActiveRecord::Base
 		  refresh_token: user.refresh_token,
 		  expires_at: Time.at(user.expires_at)
 		  )
-		@fitbit_hr_data = client.heart_rate_intraday_time_series(user_id: '-', date: @date.strftime('%Y-%m-%d'), start_time: @date.strftime('%H:%M'),end_time:(@date + 1.hour).strftime('%H:%M'), detail_level: '1min')
-		@fitbit_hr_data = @fitbit_hr_data
+		client.heart_rate_intraday_time_series(user_id: '-', date: @date.strftime('%Y-%m-%d'), start_time: @date.strftime('%H:%M'),end_time:(@date + 1.hour).strftime('%H:%M'), detail_level: '1min')
+		
 		
 	end
 

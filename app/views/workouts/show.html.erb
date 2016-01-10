@@ -9,6 +9,14 @@
 <p> Lift Rep Scheme: <%= @workout.lift_rep_scheme %> </p>
 <%= link_to "Delete Workout", workout_path(@workout), method: 'delete' %>
 
+<% if @workout.fitbit_heart_rate? %>
+<% @data = eval(@workout.fitbit_heart_rate.gsub('=>',":")) %>
+<% @time = @data.map{|time| time[:time]} %>
+<% @heart_rate = @data.map{|value| value[:value]} %>
+
+<p> <%= @heart_rate %> </p>
+<p> <%= @time %> </p>
+<% end %>
 <br>
 <%= link_to "Edit Workout",edit_workout_path(@workout) %> | 
 
