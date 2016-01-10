@@ -16,4 +16,22 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
- 
+ body {
+  background: url('http://crossfitveritas.com/wp-content/blogs.dir/159/files/2015/10/UPT-gym-11.jpg') no-repeat center center fixed;
+  background-size: cover;
+ }
+
+ .main_content {
+  background-color: rgba(255, 255, 255, .8);
+  padding: 20px;
+  border-radius: 5px; 
+}
+
+.page_title {
+  margin-top: 0 !important;
+}
+
+.welcome .main_content {
+  background-color: transparent !important;
+  padding: 0 !important;
+}

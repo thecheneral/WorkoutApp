@@ -2,9 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body {
-  background-image: image-url('hompage.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
- }
+
+
+.jumbotron {
+  text-align: center;
+  color: #F5F5F5 !important;
+  background-color: rgba(0, 0, 0, .4) !important;
+}
+
+.button_sign_in {
+  background-color: #827F7F !important;
+  border-color: #827F7F !important;
+  color: #FFF !important;
+}
+

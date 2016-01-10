@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-  <body class="home">
+  <body class="<%= content_for :body_class %>">
     <nav class="navbar navbar-default">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,7 +47,7 @@
     </nav>
       <%= render partial: "shared/flash_messages", flash: flash %>
 
-  <div class = 'container'>
+  <div class = 'container main_content'>
     <%= yield %>
   </div>
 </body>

@@ -1,15 +1,13 @@
+<% content_for :body_class, 'welcome' %>
 <div class="row">
   <div class="col-md-12">
 
     <div class="jumbotron">
       <h1>Welcome to WOD Tracker</h1>
-      <p> This is a test application. </p>
-      <p><a class="btn btn-primary btn-lg" href='<%= new_user_registration_path %>' role="button">Sign Up</a></p>
+      <p> This is a test application. Sign up to tracker results from parsed WODs.</p>
+      <p><a class="btn button_sign_in btn-default btn-lg" href='<%= new_user_registration_path %>' role="button">Sign Up</a></p>
+    </div>
 
-    </div>
-    <div>
-      <%= image_tag("homepage.jpg") %>
-    </div>
 
 
     <% if user_signed_in? %>
