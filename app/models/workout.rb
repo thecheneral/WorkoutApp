@@ -4,7 +4,8 @@ class Workout < ActiveRecord::Base
 
 	
 	def self.search(query)
-	    self.where("workout_datetime LIKE :query OR description LIKE :query OR lift_type LIKE :query", query: "%#{query}%")
+	   	self.where("workout_datetime LIKE :query OR description LIKE :query OR lift_type LIKE :query", query: "%#{query}%")
+	    # self.where( "strftime('%M', workout_datetime) + 0 = ?" LIKE :query)
 	end
 
 
