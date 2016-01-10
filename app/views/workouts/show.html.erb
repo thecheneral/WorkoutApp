@@ -1,4 +1,4 @@
-<h1> The workout for <%= @workout.workout_datetime.to_date.to_formatted_s(:long_ordinal) %> </h1>
+<h1 class="page_title"> The workout for <%= @workout.workout_datetime.to_date.to_formatted_s(:long_ordinal) %> </h1>
 
 <h3> Gym: <%= @workout.gym.name %> </h3>
 
@@ -10,6 +10,5 @@
 <%= link_to "Delete Workout", workout_path(@workout), method: 'delete' %>
 
 <br>
-<%= link_to "Log New Workout",new_workout_path %> | 
 <%= link_to "Edit Workout",edit_workout_path(@workout) %> | 
-<%= link_to "View All Workouts", workouts_path(id: "all") %>
+

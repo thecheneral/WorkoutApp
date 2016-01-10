@@ -6,11 +6,14 @@ class WorkoutsController < ApplicationController
 
 	    if @search
 	    	@workouts = current_user.workouts.search(@search)
+	    	@workouts = @workouts.sort_by(&:workout_datetime).reverse
 
 	    elsif params[:id] == "all"
 	    	@workouts = current_user.workouts.all
+	    	@workouts = @workouts.sort_by(&:workout_datetime).reverse
 	    else
 	    	@workouts = current_user.workouts.find(params[:id])
+	    	@workouts = @workouts.sort_by(&:workout_datetime).reverse
 	    end
 		
 	end
@@ -39,25 +42,7 @@ class WorkoutsController < ApplicationController
 			@workout.description = @workout_scrape
 			@fitbit = @workout.get_fitbit_data(@workout.workout_datetime,current_user)
 			flash[:notice] = "Description added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
-		else
-			flash[:notice] = "Awaiting updates..."
 		end
-		# require 'nokogiri'
-		# require 'open-uri'
-
-		# @workout = Workout.find(params[:id])
-		# @url = @workout.gym.workout_url
-		# @date = "#{@workout.workout_datetime.month}#{@workout.workout_datetime.day}#{@workout.workout_datetime.year.to_s.split(//).last(2).join}"
-		
-		# @wod_from_site = Nokogiri::HTML(open("#{@url}#{@date}/"))
-		# #would need to pass the date for the specific feed and would need to pass the specific date
-		# @scrape = @wod_from_site.css('div.entry-content')[0].css('p').map{|p| p.children.first.text}
-		# @scrape.drop(1)
-
-		# # @scrape.each do |line|
-		# # 	 = line
-		# # end
-		# @workout.description = @scrape.join("<p>")
 	end
 
 	def show
@@ -69,14 +54,15 @@ class WorkoutsController < ApplicationController
 		if @workout.update(update_params)
 			redirect_to workout_path(@workout)
 		else
-      		flash.now[:error] = @workout.errors.messages.first.join(" ")
-      		render 'edit'
-      	end
+      flash.now[:error] = @workout.errors.messages.first.join(" ")
+      render 'edit'
+    end
 	end
 
 	def destroy
 		@workout = Workout.find(params[:id])
     @workout.destroy
+		flash[:notice] = "Workout on #{@workout.workout_datetime.strftime("%B %d, %Y")} deleted."
     redirect_to workouts_path(id: "all")
 	end
 

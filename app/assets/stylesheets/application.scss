@@ -19,6 +19,7 @@
  body {
   background: url('http://crossfitveritas.com/wp-content/blogs.dir/159/files/2015/10/UPT-gym-11.jpg') no-repeat center center fixed;
   background-size: cover;
+  padding-bottom: 40px;
  }
 
  .main_content {
@@ -44,4 +45,27 @@
 
 .navbar-default a {
   color: #000 !important;
+}
+
+.button_grey {
+  background-color: #827F7F !important;
+  border-color: #827F7F !important;
+  color: #FFF !important;
+}
+
+
+.table_title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  border-top: none !important;
+}
+
+.view_workouts {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.view_workouts td {
+  border-top: solid 1px #A9A9A9 !important;
 }

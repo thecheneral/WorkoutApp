@@ -1,5 +1,13 @@
-<h1 class="page_title"> Edit Workout </h1>
-<%= render 'updateform' %>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" style="text-align:center;">
+      <h1 class="page_title"> Edit Workout for <%= @workout.workout_datetime.strftime("%B %d, %Y") %> @ <%= @workout.workout_datetime.strftime('%H:%M %P') %> </h1>
+      <h1 class="page_title"> @ <%= @workout.gym.name %> </h1>
+  </div>
+</div>
 
-<%= link_to "Log New Workout",new_workout_path %> | 
-<%= link_to "View All Workouts", workouts_path(id: "all") %>
+<div class="row" style="margin-top:20px;">
+  <div class="col-md-10 col-md-offset-1">
+    <%= render 'updateform' %>
+  </div>
+</div>
+
