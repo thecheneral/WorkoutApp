@@ -7,6 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 #Delete current data from tables
+
+ # body {
+ #  background: url('http://crossfitveritas.com/wp-content/blogs.dir/159/files/2015/10/UPT-gym-11.jpg') no-repeat center center fixed;
+ #  background-size: cover;
+ #  padding-bottom: 40px;
+ # }
+ 
 User.delete_all
 Workout.delete_all
 Gym.delete_all

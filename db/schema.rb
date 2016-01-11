@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111065349) do
+ActiveRecord::Schema.define(version: 20160111233602) do
 
   create_table "gyms", force: :cascade do |t|
     t.string   "name"
     t.string   "workout_url"
-    t.boolean  "default"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
