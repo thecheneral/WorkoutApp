@@ -25,9 +25,8 @@ gym1 = Gym.find_or_create_by(
 	:workout_url => "http://www.oldcitycrossfit.com/wod/")
 
 gym2 = Gym.find_or_create_by(
-	:name => "Sample",
-	:workout_url => "http://www.sample.com/",
-	:default => false)
+	:name => "Random Gym",
+	:workout_url => "http://www.random.com/")
 # Gym.create(
 # 	:name => "Sample Crossfit",
 # 	:workout_url => "http://www.sample.com/wod/",
