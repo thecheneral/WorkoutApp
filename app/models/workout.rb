@@ -32,7 +32,6 @@ class Workout < ActiveRecord::Base
 	end
 
 	def get_fitbit_hr_data (selected_date, user)
-		byebug
 		@date = selected_date
 		
 		client = Fitbit::Client.new(
