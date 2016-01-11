@@ -1,23 +1,67 @@
-<h1 class="page_title"> The workout for <%= @workout.workout_datetime.to_date.to_formatted_s(:long_ordinal) %> </h1>
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="page_title"> The workout for <%= @workout.workout_datetime.strftime("%B %d, %Y") %> @ <%= @workout.workout_datetime.strftime('%H:%M %P') %> </h1>
 
-<h3> Gym: <%= @workout.gym.name %> </h3>
+  <h3> Gym: <%= @workout.gym.name %> </h3>
+  </div>
+</div>
+<div class ="row">
+  <div class="col-md-12">
+    <table class="table show_workouts">
+      <tr><td class="show_workouts_label"> Workout</td><td> <%= @workout.description %> </td></tr>
+      <tr><td class="show_workouts_label"> Result</td><td> <%= @workout.result %> </td></tr>
+      <tr><td class="show_workouts_label"> Lift Type</td><td> <%= @workout.lift_type %> </td></tr>
+      <tr><td class="show_workouts_label"> Lift Weight</td><td> <%= @workout.lift_weight %> </td></tr>
+      <tr><td class="show_workouts_label"> Lift Rep Scheme</td><td> <%= @workout.lift_rep_scheme %> </td></tr>
+      <tr><td></td><td>
+            <%= link_to "Delete Workout", workout_path(@workout), method: 'delete', :class=>"btn btn-sm button_grey" %>
+            <%= link_to "Edit Workout",edit_workout_path(@workout), :class=>"btn btn-sm button_grey" %> 
+    </td>
+  </tr>
+    </table>
+  </div>
+</div>
 
-<p> Workout: <%= @workout.description %> </p>
-<p> Result: <%= @workout.result %> </p>
-<p> Lift Type: <%= @workout.lift_type %> </p>
-<p> Lift Weight: <%= @workout.lift_weight %> </p>
-<p> Lift Rep Scheme: <%= @workout.lift_rep_scheme %> </p>
-<%= link_to "Delete Workout", workout_path(@workout), method: 'delete' %>
-
+  
 <% if @workout.fitbit_heart_rate? %>
-<% @data = eval(@workout.fitbit_heart_rate.gsub('=>',":")) %>
-<% @time = @data.map{|time| time[:time]} %>
-<% @heart_rate = @data.map{|value| value[:value]} %>
+  <% @data = eval(@workout.fitbit_heart_rate.gsub('=>',":")) %>
+  <% @time = @data.map{|time| time[:time]} %>
+  <% @heart_rate = @data.map{|value| value[:value]} %>
 
-<p> <%= @heart_rate %> </p>
-<p> <%= @time %> </p>
+    <% data = {
+        labels: @time,
+        datasets: [
+            {
+                label: "Heart Rate by Minute",
+                fillColor: "rgba(255,255,255,0)",
+                # fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(255,255,255,255)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#000000",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: @heart_rate
+            }
+        ]
+    }%>
+    <% options = {width:1000,height:600,responsive: true,
+    # //Boolean - Whether to show a dot for each point
+    pointDot: true,
+    # //Number - Radius of each point dot in pixels
+    pointDotRadius: 4,
+    # //Number - Pixel width of point dot stroke
+    pointDotStrokeWidth: 1,
+    # //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+    pointHitDetectionRadius: 5,
+    tooltipXOffset: 5,
+    # // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio: true,
+    # // Boolean - Determines whether to draw tooltips on the canvas or not
+    showTooltips: true} %>
+  <div class="row">
+    <div class="col-md-12">
+      <h3> Fitbit Heart Rate Data by Minute</h3>
+      <%= line_chart data, options %> 
+    </div>
+  </div>
 <% end %>
-<br>
-<%= link_to "Edit Workout",edit_workout_path(@workout) %> | 
-
-%canvas#canvas{:height => "450", :width => "600"}

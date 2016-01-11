@@ -15,5 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require Chart
+//= require excanvas
+
+
 
 //= require bootstrap-sprockets

@@ -32,7 +32,7 @@ gem 'bootstrap-sass'
 gem 'nokogiri'
 gem 'omniauth-fitbit-oauth2'
 gem 'fitbit-api-client', require: 'fitbit'
-gem 'chart-js-rails'
+gem 'chartjs-ror'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
