@@ -1,7 +1,8 @@
 class GymsController < ApplicationController
-	
+before_filter :authenticate_user!	
 	def index
 		@gyms = current_user.gyms.all
+    @gyms = Gym.all
 	end
 
 	def new
@@ -9,36 +10,45 @@ class GymsController < ApplicationController
 	end
 
   def create
-    @gym = current_user.gyms.build gym_params
-
-    # @workout.gym = Gym.find_or_create_by(name:params[:gym])
+    # @gym = current_user.gyms.build gym_params
+    @gym = Gym.find_or_create_by(name:gym_parms[:name])
 
     if @gym.save
-      @membership = current_user.memberships.build(gym_id: @gym.id, default: gym_params[:default] == '1')
+      @membership = current_user.memberships.build(user_id: current_user.id, gym_id: @gym.id, default: gym_params[:default] == '1')
       @membership.save
       flash[:notice] = "Gym created."
       redirect_to gym_path(@gym)
     else
-      flash.now[:alert] = @gym.errors.first
+      flash.now[:alert] = @gym.errors.messages.first.join("")
       render 'new'
     end    
   end
 
 	def show
-		@gym = Gym.find(params[:id])
+		@gym = current_user.gyms.find(params[:id])
     @workouts = current_user.workouts.where(gym: @gym)
 	end
 
 	def edit
-		
+		@gym = current_user.gyms.find(params[:id])
 	end
 
 	def update
-		
+    @gym = current_user.gyms.find(params[:id])
+		if @gym.update(gym_params)
+      @membership = Membership.find(gym_id: @gym.id, user_id: current_user.id)
+      @membership.update(gym_id: @gym_id, default: gym_params[:default] == '1')
+      flash[:notice] = "Gym updated."
+      redirect_to gym_path(@gym)
+    else
+      flash.now[:error] = @gym.errors.messages.first.join(" ")
+      render 'edit'
+    end
 	end
 
 	def destroy
-    @gym = Gym.find(params[:id])
+    # @gym = Gym.find(params[:id])
+    @gym = current_user.gyms.find(params[:id])
     @gym.destroy
     redirect_to gyms_path
 	end

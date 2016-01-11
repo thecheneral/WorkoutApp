@@ -5,20 +5,23 @@
   <h3> Gym: <%= @workout.gym.name %> </h3>
   </div>
 </div>
-<div class ="row">
+<div class="row">
   <div class="col-md-12">
-    <table class="table show_workouts">
-      <tr><td class="show_workouts_label"> Workout</td><td> <%= @workout.description %> </td></tr>
-      <tr><td class="show_workouts_label"> Result</td><td> <%= @workout.result %> </td></tr>
-      <tr><td class="show_workouts_label"> Lift Type</td><td> <%= @workout.lift_type %> </td></tr>
-      <tr><td class="show_workouts_label"> Lift Weight</td><td> <%= @workout.lift_weight %> </td></tr>
-      <tr><td class="show_workouts_label"> Lift Rep Scheme</td><td> <%= @workout.lift_rep_scheme %> </td></tr>
-      <tr><td></td><td>
-            <%= link_to "Delete Workout", workout_path(@workout), method: 'delete', :class=>"btn btn-sm button_grey" %>
-            <%= link_to "Edit Workout",edit_workout_path(@workout), :class=>"btn btn-sm button_grey" %> 
-    </td>
-  </tr>
-    </table>
+    <div class ="table-responsive">
+  
+      <table class="table table-hover show_workouts_table">
+        <tr><td class="show_workouts_label"> Workout</td><td> <%= @workout.description %> </td></tr>
+        <tr><td class="show_workouts_label"> Result</td><td> <%= @workout.result %> </td></tr>
+        <tr><td class="show_workouts_label"> Lift Type</td><td> <%= @workout.lift_type %> </td></tr>
+        <tr><td class="show_workouts_label"> Lift Weight</td><td> <%= @workout.lift_weight %> </td></tr>
+        <tr><td class="show_workouts_label"> Lift Rep Scheme</td><td> <%= @workout.lift_rep_scheme %> </td></tr>
+        <tr><td></td><td>
+              <%= link_to "Edit Workout",edit_workout_path(@workout), :class=>"btn btn-sm button_grey" %>
+              <%= link_to "Delete Workout", workout_path(@workout), method: 'delete', :class=>"btn btn-sm button_grey" %>
+            </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 

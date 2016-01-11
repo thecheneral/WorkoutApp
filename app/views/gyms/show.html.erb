@@ -1,16 +1,43 @@
-<h1><%= @gym.name %></h1>
-<h2>Recorded Workouts under this gym for <%= current_user.first_name %>: </h2>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1" style="text-align:center;">
+    <h1 class="page_title"> Recorded Workouts @ <%= @gym.name %> for <%= current_user.first_name %> </h1>
+  </div>
+</div>
 
-<ul>
-  <% @workouts.each do |workout| %>
-    	<li> <%= link_to workout.workout_datetime.to_date.to_formatted_s(:long_ordinal), workout %> 
-		| <%= truncate(workout.description) %> </li>
-  <% end %>
-</ul>
-
-<br>
-<%= link_to "Delete Gym", gym_path(id: @gym), method: 'delete' %>
-
-<br>
-<%= link_to "View All Workouts", workouts_path(id: "all") %>
-<%=link_to "View Gyms", gyms_path %>
+<div class="table-responsive">
+  <table class="table table-hover view_workouts">
+    <tr>
+      <td class="table_title" style="text-align:left; border-top: none !important;"> Date </td>
+      <td class="table_title" style="text-align:center; border-top: none !important;"> Description </td> 
+      <td class="table_title" style="text-align:center; border-top: none !important;"> Lift Type </td>
+      <td class="table_title" style="text-align:center; border-top: none !important;"> Workout Result </td>
+      <td class="table_title" style="text-align:center; border-top: none !important;"> </td>
+    </tr>
+    <% @workouts.each do |workout| %>
+      <tr>
+        <td>
+          <%= link_to workout.workout_datetime.to_date.to_formatted_s(:long_ordinal), workout %>
+          (<%= time_ago_in_words(workout.workout_datetime) %> ago)
+        </td>
+        <td> 
+           <%= truncate(workout.description, length: 40, separator: ' ', omission: '') {link_to "...", workout} %>
+        </td>
+        <td style="text-align:center;">
+          <%= workout.lift_type %>
+        </td>
+        <td style="text-align:center;">
+          <%= workout.result %>
+        </td>
+        <td style="text-align:center;">
+          <%= link_to "X", workout_path(workout), method: 'delete' %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="row">
+    <div class="col-xs-10">
+      <%= link_to "Edit Gym", edit_gym_path(id: @gym), :class=>"btn btn-sm button_grey" %>
+<%= link_to "Delete Gym", gym_path(id: @gym), method: 'delete', :class=>"btn btn-sm button_grey" %>
+    </div>
+  </div>
+</div>

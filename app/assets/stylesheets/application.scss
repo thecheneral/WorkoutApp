@@ -70,8 +70,8 @@
   border-top: solid 1px #A9A9A9 !important;
 }
 
-.new_workout_title {
-  text-align: right;
+.new_title {
+  text-align: right !important;
   padding-top: 3px;
   margin-bottom: 20px;
 }
@@ -88,4 +88,8 @@
   font-weight: bold;
   text-align: right;
 
+}
+
+.show_workouts_table {
+  border-top: none;
 }

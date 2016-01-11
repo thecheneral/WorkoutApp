@@ -1,5 +1,5 @@
 class WorkoutsController < ApplicationController
-	before_filter :authenticate_user!, only: [:index, :new, :create, :show, :edit, :udpate, :destroy ]
+	before_filter :authenticate_user!
 	
 	def index
 		@search = params[:search]

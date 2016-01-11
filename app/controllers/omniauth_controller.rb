@@ -1,4 +1,5 @@
 class OmniauthController < ApplicationController
+before_filter :authenticate_user!
   def create
 
     auth_hash = request.env['omniauth.auth']
