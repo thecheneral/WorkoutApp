@@ -8,8 +8,9 @@ Rails.application.routes.draw do
 
 
   get 'welcome/', to: 'welcome#index' #http method to get
-  #get '/auth/fitbit_oauth2/callback', :to => 'omniauth#create'
-get '/auth/:provider/callback', :to => 'omniauth#create'
+  get '/auth/:provider/callback', :to => 'omniauth#create'
+
+  get '/get_fitbit_data/:id', :to => 'workouts#fitbit'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

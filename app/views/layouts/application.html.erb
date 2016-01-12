@@ -41,6 +41,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><%= link_to "Edit User", edit_user_registration_path %></li>
+                <li><%= link_to "Authenticate Fitbit", root_path + "auth/fitbit_oauth2" %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link_to "Sign out as #{current_user.email}", destroy_user_session_path, method: :delete %></li>
               </ul>

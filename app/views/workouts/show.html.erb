@@ -18,6 +18,12 @@
         <tr><td></td><td>
               <%= link_to "Edit Workout",edit_workout_path(@workout), :class=>"btn btn-sm button_grey" %>
               <%= link_to "Delete Workout", workout_path(@workout), method: 'delete', :class=>"btn btn-sm button_grey" %>
+            <% if current_user.access_token.nil? || current_user.expires_at.nil? %>
+              <%=link_to "Authenticate FitBit", root_path + "auth/fitbit_oauth2", :class=>"btn btn-sm button_grey" %>
+            <% elsif @workout.fitbit_heart_rate.nil? %>
+              <%=link_to "Get FitBit Data", "/get_fitbit_data/#{@workout.id}", :class=>"btn btn-sm button_grey" %>
+            <% end %>
+
             </td>
         </tr>
       </table>
@@ -28,43 +34,52 @@
   
 <% if @workout.fitbit_heart_rate? %>
   <% @data = eval(@workout.fitbit_heart_rate.gsub('=>',":")) %>
-  <% @time = @data.map{|time| time[:time]} %>
-  <% @heart_rate = @data.map{|value| value[:value]} %>
-
-    <% data = {
-        labels: @time,
-        datasets: [
-            {
-                label: "Heart Rate by Minute",
-                fillColor: "rgba(255,255,255,0)",
-                # fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(255,255,255,255)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#000000",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: @heart_rate
-            }
-        ]
-    }%>
-    <% options = {width:1000,height:600,responsive: true,
-    # //Boolean - Whether to show a dot for each point
-    pointDot: true,
-    # //Number - Radius of each point dot in pixels
-    pointDotRadius: 4,
-    # //Number - Pixel width of point dot stroke
-    pointDotStrokeWidth: 1,
-    # //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-    pointHitDetectionRadius: 5,
-    tooltipXOffset: 5,
-    # // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-    maintainAspectRatio: true,
-    # // Boolean - Determines whether to draw tooltips on the canvas or not
-    showTooltips: true} %>
-  <div class="row">
+  <% if @data.empty? %>
+    <div class="row">
     <div class="col-md-12">
-      <h3> Fitbit Heart Rate Data by Minute</h3>
-      <%= line_chart data, options %> 
+      <h3> There is no FitBit data for this workout.</h3>
     </div>
   </div>
+  <% else %>
+
+    <% @time = @data.map{|time| time[:time]} %>
+    <% @heart_rate = @data.map{|value| value[:value]} %>
+
+      <% data = {
+          labels: @time,
+          datasets: [
+              {
+                  label: "Heart Rate by Minute",
+                  fillColor: "rgba(255,255,255,0)",
+                  # fillColor: "rgba(220,220,220,0.2)",
+                  strokeColor: "rgba(255,255,255,255)",
+                  pointColor: "rgba(220,220,220,1)",
+                  pointStrokeColor: "#000000",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: @heart_rate
+              }
+          ]
+      }%>
+      <% options = {width:1000,height:600,responsive: true,
+      # //Boolean - Whether to show a dot for each point
+      pointDot: true,
+      # //Number - Radius of each point dot in pixels
+      pointDotRadius: 4,
+      # //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth: 1,
+      # //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius: 5,
+      tooltipXOffset: 5,
+      # // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio: true,
+      # // Boolean - Determines whether to draw tooltips on the canvas or not
+      showTooltips: true} %>
+    <div class="row">
+      <div class="col-md-12">
+        <h3> Fitbit Heart Rate Data by Minute</h3>
+        <%= line_chart data, options %> 
+      </div>
+    </div>
+  <% end %>
 <% end %>

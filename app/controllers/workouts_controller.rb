@@ -19,7 +19,7 @@ class WorkoutsController < ApplicationController
 	end
 
 	def new
-		@workout = current_user.workouts.new
+			@workout = current_user.workouts.new
 	end
 	
 	def create
@@ -27,34 +27,42 @@ class WorkoutsController < ApplicationController
 		# @workout.gym = Gym.find_or_create_by(name:params[:gym])
 
 		if @workout.save
-			flash[:notice] = "Workout fetched for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
 			redirect_to edit_workout_path(@workout)
 		else
-      		flash.now[:alert] = @workout.errors.first
-      		render 'new'
-      	end
+			flash.now[:alert] = @workout.errors[:alert].join(" ")
+      render 'new'
+    end
 	end
 
 	def edit
+		#pull id of a workout creation redirected from create
 		@workout = Workout.find(params[:id])
-		if @workout.description.nil? || @workout.description.empty?
-			@workout_scrape = @workout.get_gym_feed(@workout.gym.workout_url,@workout.workout_datetime)
-			@workout.description = @workout_scrape
 
+		#if the description is blank - scrape it.
+		if @workout.description.nil? || @workout.description.empty?
+			#need error handling here
+			@workout_scrape = @workout.get_gym_feed(@workout.gym.workout_url,@workout.workout_datetime)
+			@workout.update_attribute(:description, @workout_scrape)
+			notice = ["Description added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."]
+		end
+		
+		#begin pulling fitbit data, but if there's no access token or expiration than flash message and end
+		if current_user.access_token.nil? || current_user.expires_at.nil?
+			notice = notice.push("\nFitBit needs to be authenticated to get HR data.")
+			flash[:notice] = notice.join
+		#everything should be good to go so returning fitbit HR data
+		elsif @workout.fitbit_heart_rate.nil? || @workout.fitbit_heart_rate.empty?
 			@fitbit_hr = @workout.get_fitbit_hr_data(@workout.workout_datetime,current_user)
-			@data = (@fitbit_hr)
+			@data = @fitbit_hr
 			@hr_minute_data = @data["activities-heart-intraday"]["dataset"]
 			@workout.update_attribute(:fitbit_heart_rate, @hr_minute_data)
-			flash[:notice] = "Description and FitBit Heart Rate Data added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}."
+			notice = notice.push("\nFitBit Heart Rate Data added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}.")
+			flash[:notice] = notice.join
 		end
 	end
 
 	def show
 		@workout = Workout.find(params[:id])
-		# @data = eval(@workout.fitbit_heart_rate)
-		# @time = @data.map{|time| time["time"]}
-		# @heart_rate = @data.map{|value| value["value"]}
-		# @workout = {:workout => @workout, :time => @time, :heart_rate => @heart_rate}
 	end
 	
 	def update
@@ -65,6 +73,25 @@ class WorkoutsController < ApplicationController
       flash.now[:error] = @workout.errors.messages.first.join(" ")
       render 'edit'
     end
+	end
+
+	def fitbit
+		@workout = Workout.find(params[:id])
+		#begin pulling fitbit data, but if there's no access token or expiration than flash message and end
+		if current_user.access_token.nil? || current_user.expires_at.nil?
+			notice = notice.push("\nFitBit needs to be authenticated to get HR data.")
+			flash[:notice] = notice.join
+		#everything should be good to go so returning fitbit HR data
+		elsif @workout.fitbit_heart_rate.nil? || @workout.fitbit_heart_rate.empty?
+			@fitbit_hr = @workout.get_fitbit_hr_data(@workout.workout_datetime,current_user)
+			@data = @fitbit_hr
+			@hr_minute_data = @data["activities-heart-intraday"]["dataset"]
+			@workout.update_attribute(:fitbit_heart_rate, @hr_minute_data)
+			notice = notice.push("\nFitBit Heart Rate Data added for #{@workout.workout_datetime.to_date.to_formatted_s(:long_ordinal)}.")
+			flash[:notice] = notice.join
+		else
+		end
+		redirect_to workout_path(@workout) #goes back to the show
 	end
 
 	def destroy

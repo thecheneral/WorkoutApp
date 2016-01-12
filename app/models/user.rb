@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :workouts
   has_many :memberships
-  has_many :gyms, :through => :memberships
+  has_many :gyms, :through => :memberships 
 
+  has_many :default_gyms, -> { default }, :class_name => 'Membership'
 
 end
