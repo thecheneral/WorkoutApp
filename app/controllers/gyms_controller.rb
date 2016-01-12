@@ -39,8 +39,8 @@ before_filter :authenticate_user!
     membership_default = params["gym"]["memberships"][:default]
     @gym = current_user.gyms.find(params[:id])
 		if @gym.update(gym_params)
-      @membership = Membership.find(gym_id: @gym.id, user_id: current_user.id)
-      @membership.update(gym_id: @gym_id, default: membership_default == '1')
+      @membership = Membership.find_by(gym_id: @gym.id, user_id: current_user.id)
+      @membership.update(default: membership_default == '1')
       flash[:notice] = "Gym updated."
       redirect_to gym_path(@gym)
     else
@@ -59,6 +59,6 @@ before_filter :authenticate_user!
   private
 
   def gym_params
-    params.require(:gym).permit(:name, :workout_url, :memberships)
+    params.require(:gym).permit(:name, :workout_url)
   end
 end
