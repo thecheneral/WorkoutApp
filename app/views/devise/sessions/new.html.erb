@@ -1,27 +1,45 @@
-<h2>Log in</h2>
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="page_title">Log In</h1>
+  </div>
+</div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, :html => {:class => 'form-inline'}, url: session_path(resource_name)) do |f| %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+  <div class="row">
+    <div class="col-sm-3 new_title">
+      <%= f.label :email %>
+    </div>
+    <div class="col-sm-9">
+      <%= f.email_field :email, autofocus: true, :class => "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+  <div class="row">
+    <div class="col-sm-3 new_title">
+      <%= f.label :password %>
+    </div>
+    <div class="col-sm-9">
+      <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+    </div>
   </div>
 
   <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <div class="row">
+      <div class="col-sm-3 new_title">
+        <%= f.label :remember_me %>
+      </div>
+      <div class="col-sm-9">
+        <%= f.check_box :remember_me, :class => "form-control" %>
+      </div>
     </div>
   <% end -%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-3">
+      <%= f.submit "Log in", class: 'btn btn-primary btn-lg button_grey' %>
+    </div>
   </div>
-<% end %>
 
+<% end %>
 <%= render "devise/shared/links" %>
