@@ -16,7 +16,7 @@ before_filter :authenticate_user!
       flash[:notice] = "Fitbit connected!"
     end
 
-    redirect_to workouts_path
+    redirect_to workouts_path(id: "all")
   end
 
 
