@@ -23,7 +23,7 @@
                <%= link_to gym.workout_url, gym.workout_url %>
             </td>
             <td>
-                <%= gym.default.to_s.capitalize %>
+                <%= gym.find_default(gym).to_s.capitalize %>
             </td>
             <td style="text-align:center;">
               <%= link_to "X", gym_path(gym), method: 'delete' %>
