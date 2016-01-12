@@ -5,7 +5,7 @@ before_filter :authenticate_user!
 	end
 
 	def new
-		@gym = current_user.gyms.new
+    @gym = current_user.gyms.new
 	end
 
   def create
@@ -19,6 +19,7 @@ before_filter :authenticate_user!
         redirect_to gym_path(@gym)
       else
         flash.now[:error] = @gym.errors.messages.first.join(" ")
+        render 'new'
       end
     else
       flash.now[:alert] = @membership.errors[:alert].join(" ")
@@ -37,12 +38,16 @@ before_filter :authenticate_user!
 
 	def update
     membership_default = params["gym"]["memberships"][:default]
-    @gym = current_user.gyms.find(params[:id])
+    @gym = current_user.gyms.find_or_create_by(params[:id])
 		if @gym.update(gym_params)
-      @membership = Membership.find_by(gym_id: @gym.id, user_id: current_user.id)
-      @membership.update(default: membership_default == '1')
-      flash[:notice] = "Gym updated."
-      redirect_to gym_path(@gym)
+      @membership = Membership.find_or_create_by(gym_id: @gym.id, user_id: current_user.id)
+      if @membership.update(default: membership_default == '1')
+        flash[:notice] = "Gym updated."
+        redirect_to gym_path(@gym)
+      else
+        flash.now[:alert] = @membership.errors[:alert].join(" ")
+        render 'edit'
+      end
     else
       flash.now[:error] = @gym.errors.messages.first.join(" ")
       render 'edit'
@@ -52,7 +57,11 @@ before_filter :authenticate_user!
 	def destroy
     # @gym = Gym.find(params[:id])
     @gym = current_user.gyms.find(params[:id])
-    @gym.destroy
+    if @gym.destroy
+      flash[:notice] = "Gym for #{@current_user.name} was deleted."
+    else
+      flash.now[:error] = @gym.errors.messages.first.join(" ")
+    end
     redirect_to gyms_path
 	end
 
